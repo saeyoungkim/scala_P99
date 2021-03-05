@@ -70,4 +70,26 @@ class P99Spec extends AnyFunSpec {
             assert(Problems99.reverse3(testList) == List(8,5,3,2,1,1))
         }
     }
+
+    /**
+     * P06
+     * scala> isPalindrome(List(1, 2, 3, 2, 1))
+     * res0: Boolean = true
+     */
+      describe("P06") {
+            it("#isPalindrome") {
+              assert(Problems99.isPalindrome(List(1,2,3,2,1)))
+            }
+      }
+
+    /**
+     * P07
+     * scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))
+     * res0: List[Any] = List(1, 1, 2, 3, 5, 8)
+     */
+    describe("P07") {
+        it("#flatten") {
+            assert(Problems99.flatten(List(List(1,1),2,List(3,List(5,8)))) == testList)
+        }
+    }
 }

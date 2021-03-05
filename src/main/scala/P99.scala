@@ -57,9 +57,7 @@ object Problems99 extends App {
 
     def reverse2[T](list: List[T]): List[T] = list.foldLeft(List.empty[T])((r, h) => h :: r)
 
-    /**
-     * tail recursive
-     */
+    // tail recursive
     def reverse3[T](list: List[T]): List[T] = {
       def reverseTailRec(ret: List[T], curr: List[T]): List[T] = curr match {
           case Nil => ret
@@ -67,4 +65,27 @@ object Problems99 extends App {
       }
       reverseTailRec(Nil, list)
     }
+
+    /**
+     * P06 (*) Find out whether a list is a palindrome.
+     */
+    def isPalindrome[T](list: List[T]): Boolean = {
+        list.reverse == list
+    }
+
+    /**
+     * P07 (**) Flatten a nested list structure.
+     */
+    def flatten(list: List[Any]): List[Any] =
+        list.foldLeft(List.empty[Any])((l, elm) => elm match {
+            case Nil => l
+            case xs : List[Any] => l ++ flatten(xs)
+            case v => l :+ v
+        })
+
+    def flatten2(list: List[Any]): List[Any] =
+        list.flatMap {
+            case ms: List[_] => flatten2(ms)
+            case e => List(e)
+        }
 }
