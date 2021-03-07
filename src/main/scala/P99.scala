@@ -88,4 +88,70 @@ object Problems99 extends App {
             case ms: List[_] => flatten2(ms)
             case e => List(e)
         }
+
+
+    /**
+     * P08 (**) Eliminate consecutive duplicates of list elements.
+     */
+    def compress[T](list: List[T]): List[T] = {
+        list.foldLeft(List.empty[T]) {
+            (r, e) =>
+                r match {
+                    case r if r.isEmpty => List(e)
+                    case r if r.head == e => r
+                    case _ => e :: r
+                }
+        }.reverse
+    }
+
+    def compress2[T](list: List[T]): List[T] = {
+      def compressR(result: List[T], curlList: List[T]): List[T] = curlList match {
+          case h :: tail => compressR(h :: result, curlList = tail.dropWhile(_ == h))
+          case Nil  =>  result.reverse
+      }
+      compressR(Nil, list)
+    }
+
+    /**
+     * P09 (**) Pack consecutive duplicates of list elements into sublists.
+     */
+    def pack[T](list: List[T]): List[List[T]] = {
+        def packR(result: List[List[T]], curlList: List[T]): List[List[T]] = curlList match {
+            case h :: tail  =>   packR(addElementInPackingList(result, h), tail)
+            case Nil    =>  result.reverse
+        }
+
+        def addElementInPackingList(result: List[List[T]], elm: T) : List[List[T]] = result match {
+            case _ if !result.isEmpty && result.head.head == elm => (elm :: result.head) :: result.tail
+            case _ => List(elm) :: result
+        }
+
+        packR(Nil, list)
+    }
+
+    def pack2[T](list: List[T]): List[List[T]] = {
+        val (packed, next) = list span { _ == list.head }
+        if(next == Nil) List(packed)
+        else packed :: pack2(next)
+    }
+
+    /**
+     * P10 (*) Run-length encoding of a list.
+     */
+    def encode[T](list: List[T]): List[(Int, T)] = {
+      pack(list) map { l => (l.length, l.head) }
+    }
+
+    /**
+     * P11 (*) Modified run-length encoding.
+     */
+    def encodeModified[T](list: List[T]) =
+        encode(list) map { e => if (e._1 == 1) e._2 else e }
+
+    /**
+     * P12 (**) Decode a run-length encoded list.
+     */
+    def decode[T](list: List[(Int, T)]): List[T] = {
+        list flatMap { e => Stream.fill(e._1)(e._2) }
+    }
 }
