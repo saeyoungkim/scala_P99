@@ -157,4 +157,37 @@ class P99Spec extends AnyFunSpec {
             assert(Problems99.decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) == List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
         }
     }
+
+    /**
+     * P13
+     * scala> encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+     * res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
+     */
+    describe("P13") {
+        it("#encodeDirect") {
+            assert(Problems99.encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) == List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e)))
+        }
+    }
+
+    /**
+     * P14
+     * scala> duplicate(List('a, 'b, 'c, 'c, 'd))
+     * res0: List[Symbol] = List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd)
+     */
+    describe("P14") {
+        it("#duplicate") {
+            assert(Problems99.duplicate(List('a, 'b, 'c, 'c, 'd)) == List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd))
+        }
+    }
+
+    /**
+     * P15
+     * scala> duplicateN(3, List('a, 'b, 'c, 'c, 'd))
+     * res0: List[Symbol] = List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd)
+     */
+    describe("P15") {
+        it("#duplicateN") {
+            assert(Problems99.duplicateN(3, List('a, 'b, 'c, 'c, 'd)) ==  List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd))
+        }
+    }
 }

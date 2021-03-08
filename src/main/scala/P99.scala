@@ -154,4 +154,31 @@ object Problems99 extends App {
     def decode[T](list: List[(Int, T)]): List[T] = {
         list flatMap { e => Stream.fill(e._1)(e._2) }
     }
+
+    /**
+     * P13 (**) Run-length encoding of a list (direct solution).
+     */
+    def encodeDirect[T](list: List[T]): List[(Int, T)] =
+        list.foldLeft(List.empty[(Int, T)]) { (r, e) =>
+            r match {
+                case Nil => (1,e) :: r
+                case x :: xs => {
+                  val (_, v) = x
+                  if(v == e)
+                      (x._1 + 1, x._2) :: xs
+                  else
+                      (1,e) :: (x :: xs)
+                }
+            }
+        }.reverse
+
+    /**
+     * P14 (*) Duplicate the elements of a list.
+     */
+    def duplicate[T](list: List[T]): List[T] = list flatMap { v => List(v,v) }
+
+    /**
+     * P15 (**) Duplicate the elements of a list a given number of times.
+     */
+    def duplicateN[T](n: Int, list: List[T]): List[T] = list flatMap { List.fill(n)(_) }
 }
