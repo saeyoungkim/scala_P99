@@ -181,4 +181,53 @@ object Problems99 extends App {
      * P15 (**) Duplicate the elements of a list a given number of times.
      */
     def duplicateN[T](n: Int, list: List[T]): List[T] = list flatMap { List.fill(n)(_) }
+
+    /**
+     * P16 (**) Drop every Nth element from a list.
+     */
+    def drop[T](n: Int, list: List[T]): List[T] = list
+      .zipWithIndex
+      .filter{ case (_,idx) => (idx+1) % n != 0 }
+      .map(_._1)
+
+    def drop2[T](n: Int, list: List[T]): List[T] = {
+      def dropR(c: Int, curr: List[T], ret: List[T]): List[T] = {
+          (c,curr) match {
+              case (_, Nil) => ret.reverse
+              case (1, _ :: tail) => dropR(n, tail, ret)
+              case (_, h :: tail) => dropR(c-1, tail, h :: ret)
+          }
+      }
+
+      dropR(n, list, Nil)
+    }
+
+    /**
+     * P17 (*) Split a list into two parts
+     */
+    def split[T](n: Int, list: List[T]): (List[T],List[T]) = list.splitAt(n)
+
+    def split2[T](n: Int, list: List[T]): (List[T],List[T]) = {
+      def splitR(n: Int, head: List[T], tail: List[T]): (List[T], List[T]) = {
+            (n, tail) match {
+                case (_, Nil) => (head.reverse, Nil)
+                case (0, _) => (head.reverse, tail)
+                case (c, h :: t) => splitR(c-1, h :: head, t)
+            }
+      }
+
+      splitR(n, Nil, list)
+    }
+
+    def slice[T](from: Int, to: Int, list: List[T]): List[T] = {
+        def sliceR[T](idx: Int, curr: List[T], ret: List[T]): List[T] = {
+            (idx, curr) match {
+                case (i, h :: tail) if from <= i && i < to => sliceR(i+1, tail, h :: ret)
+                case (i, _) if i == to => ret.reverse
+                case (i, _ :: tail) => sliceR(i+1, tail, ret)
+            }
+        }
+
+        sliceR(0, list, Nil)
+    }
 }
