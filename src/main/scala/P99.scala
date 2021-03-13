@@ -219,6 +219,9 @@ object Problems99 extends App {
       splitR(n, Nil, list)
     }
 
+    /**
+     * P18 (**) Extract a slice from a list.
+     */
     def slice[T](from: Int, to: Int, list: List[T]): List[T] = {
         def sliceR[T](idx: Int, curr: List[T], ret: List[T]): List[T] = {
             (idx, curr) match {
@@ -229,5 +232,47 @@ object Problems99 extends App {
         }
 
         sliceR(0, list, Nil)
+    }
+
+    /**
+     * P19 (**) Rotate a list N places to the left.
+     */
+    def rotate[T](n: Int, list: List[T]): List[T] = {
+      val turn =
+          if (n < 0) list.length + (n % list.length)
+          else n % list.length
+      list.drop(turn) ::: list.take(turn)
+    }
+
+    /**
+     * P20 (*) Remove the Kth element from a list.
+     */
+    def removeAt[T](idx: Int, list: List[T]): (List[T],T) = {
+      if(idx < 0 || idx >= list.length) throw new IllegalArgumentException("invalid idx or list.length")
+
+    (
+        list.zipWithIndex.filter { case (elm, i) => i != idx }.map(_._1),
+        list(idx)
+    )
+    }
+
+    def removeAt2[T](idx: Int, list: List[T]): (List[T],T) = {
+        if (idx < 0) throw new NoSuchElementException
+        (idx, list) match {
+            case (_, Nil) => throw new IllegalArgumentException
+            case (0, h :: t) => (t, h)
+            case (_, h :: t) => {
+                val (l, e) = removeAt2(idx-1, t)
+                (h :: l, e)
+            }
+        }
+    }
+
+    /**
+     * P21 (*) Insert an element at a given position into a list.
+     */
+    def insertAt[T](e: T, idx: Int, list: List[T]): List[T] = {
+        val (head, tail) = list.splitAt(idx)
+        head ::: (e :: tail)
     }
 }

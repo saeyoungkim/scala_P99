@@ -1,4 +1,5 @@
 import P99._
+import com.sun.tracing.Probe
 import org.scalatest.funspec.AnyFunSpec
 
 class P99Spec extends AnyFunSpec {
@@ -229,6 +230,46 @@ class P99Spec extends AnyFunSpec {
     describe("P18") {
         it("#slice") {
             assert(Problems99.slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) == List('d, 'e, 'f, 'g))
+        }
+    }
+
+    /**
+     * P19
+     * scala> rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
+     * res0: List[Symbol] = List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
+     *
+     * scala> rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
+     * res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
+     */
+    describe("P19") {
+        it("#rotate") {
+            assert(Problems99.rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) == List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c))
+            assert(Problems99.rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)) == List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i))
+        }
+    }
+
+    /**
+     * P20
+     * scala> removeAt(1, List('a, 'b, 'c, 'd))
+     * res0: (List[Symbol], Symbol) = (List('a, 'c, 'd),'b)
+     */
+    describe("P20") {
+        it("removeAt") {
+            assert(Problems99.removeAt(1, List('a, 'b, 'c, 'd)) == (List('a, 'c, 'd),'b))
+        }
+        it("removeAt2") {
+            assert(Problems99.removeAt2(1, List('a, 'b, 'c, 'd)) == (List('a, 'c, 'd),'b))
+        }
+    }
+
+    /**
+     * P21
+     * scala> insertAt('new, 1, List('a, 'b, 'c, 'd))
+     * res0: List[Symbol] = List('a, 'new, 'b, 'c, 'd)
+     */
+    describe("P21") {
+        it("#insertAt") {
+            assert(Problems99.insertAt('new, 1, List('a, 'b, 'c, 'd)) == List('a, 'new, 'b, 'c, 'd))
         }
     }
 }
